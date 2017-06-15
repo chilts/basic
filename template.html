@@ -17,23 +17,22 @@
       </div>
     </header>
 
-    {{ if eq .Type "index" }}
+    {{ if or (eq .Type "index") (eq .Type "category") (eq .Type "tag") (eq .Type "author") (eq .Type "archive") (eq .Type "year") (eq .Type "month") }}
       <div style="background-color: #ddd; border: 1px solid #bbb; text-align: center;">
         <h2>{{ .Site.Domain.Title }}</h2>
         <h3>{{ .Site.Domain.Tagline }}</h3>
         <p>{{ .Site.Domain.Description }}</p>
       </div>
       <div>
-        <h2>Latest Posts</h2>
-        {{ range $i, $post := .Site.LatestPosts }}
-          <article>
-            <header>
-              <h3><a href="/{{ $post.Published.Format "2006/01/02" }}/{{ $post.PostName }}">{{ $post.Title }}</a></h3>
-            </header>
-            {{ $post.Html }}
-            <p style="text-align: right;"><small>{{ $post.Published.Format "20060102-150405.000000000" }}</small></p>
-          </article>
-        {{ end }}
+        <h2>{{ .Header }}</h2>
+        <ul>
+          {{ range $i, $post := .Posts }}
+            <li>
+              <a href="/{{ $post.Published.Format "2006/01/02" }}/{{ $post.PostName }}">{{ $post.Title }}</a>
+              ({{ $post.Published.Format "2006-01-02" }})
+            </li>
+          {{ end }}
+        </ul>
       </div>
     {{ end }}
 
@@ -45,18 +44,6 @@
         {{ .Html }}
         <p style="text-align: right;"><small>{{ .Post.Published.Format "20060102-150405.000000000" }}</small></p>
       </article>
-    {{ end }}
-
-    {{ if eq .Type "archive" }}
-      <section>
-        <h2>Archive</h2>
-        <ul>
-          {{ range $i, $post := .Posts }}
-            <li><a href="/{{ $post.Published.Format "2006/01/02" }}/{{ $post.PostName }}">{{ $post.Title }}</a></li>
-          {{ end }}
-        </ul>
-        <p>(Ends)</p>
-      </section>
     {{ end }}
 
     {{ if eq .Type "page" }}
