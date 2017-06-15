@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ .Site.Domain.Title }}</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  </head>
+  <body style="margin: 0; padding: 0; width: 720px; margin: auto;">
+
+    <header>
+      <div style="padding: 20px 0; float: right;">
+        <a href="/archive">Archive</a>
+      </div>
+      <div style="padding: 20px 0;">
+        <strong>{{ .Site.Domain.DomainName }}</strong>
+      </div>
+    </header>
+
+    {{ if eq .Type "index" }}
+      <div style="background-color: #ddd; border: 1px solid #bbb; text-align: center;">
+        <h2>{{ .Site.Domain.Title }}</h2>
+        <h3>{{ .Site.Domain.Tagline }}</h3>
+        <p>{{ .Site.Domain.Description }}</p>
+      </div>
+      <div>
+        <h2>Latest Posts</h2>
+        {{ range $i, $post := .Site.LatestPosts }}
+          <article>
+            <header>
+              <h3><a href="/{{ $post.Published.Format "2006/01/02" }}/{{ $post.PostName }}">{{ $post.Title }}</a></h3>
+            </header>
+            {{ $post.Html }}
+            <p style="text-align: right;"><small>{{ $post.Published.Format "20060102-150405.000000000" }}</small></p>
+          </article>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ if eq .Type "post" }}
+      <div>
+        <article>
+          <header>
+            <h3><a href="/{{ .Post.PostName }}">{{ .Post.Title }}</a></h3>
+          </header>
+          {{ .Html }}
+          <p style="text-align: right;"><small>{{ .Post.Published.Format "20060102-150405.000000000" }}</small></p>
+        </article>
+      </div>
+    {{ end }}
+
+    {{ if eq .Type "archive" }}
+      <div>
+        <h2>Archive</h2>
+        <ul>
+          {{ range $i, $post := .Posts }}
+            <li><a href="/{{ $post.Published.Format "2006/01/02" }}/{{ $post.PostName }}">{{ $post.Title }}</a></li>
+          {{ end }}
+        </ul>
+        <p>(Ends)</p>
+      </div>
+    {{ end }}
+
+    <footer style="background-color: #ddd; border: 1px solid #bbb; padding: 8px 16px;">
+      <p style="float: right;">
+        Copyright &copy; Andrew Chilton 2017
+      </p>
+      <p>
+        <a href="https://zentype.com/">Blog Hosted by ZenType</a>.
+      </p>
+    </footer>
+
+  </body>
+</html>
