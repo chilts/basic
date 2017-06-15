@@ -38,19 +38,17 @@
     {{ end }}
 
     {{ if eq .Type "post" }}
-      <div>
-        <article>
-          <header>
-            <h3><a href="/{{ .Post.PostName }}">{{ .Post.Title }}</a></h3>
-          </header>
-          {{ .Html }}
-          <p style="text-align: right;"><small>{{ .Post.Published.Format "20060102-150405.000000000" }}</small></p>
-        </article>
-      </div>
+      <article>
+        <header>
+          <h3><a href="/{{ .Post.PostName }}">{{ .Post.Title }}</a></h3>
+        </header>
+        {{ .Html }}
+        <p style="text-align: right;"><small>{{ .Post.Published.Format "20060102-150405.000000000" }}</small></p>
+      </article>
     {{ end }}
 
     {{ if eq .Type "archive" }}
-      <div>
+      <section>
         <h2>Archive</h2>
         <ul>
           {{ range $i, $post := .Posts }}
@@ -58,7 +56,15 @@
           {{ end }}
         </ul>
         <p>(Ends)</p>
-      </div>
+      </section>
+    {{ end }}
+
+    {{ if eq .Type "page" }}
+      <section>
+        <h2>{{ .Page.Title }}</h2>
+        <h3>{{ .Page.SubTitle }}</h3>
+        <div>{{ .Page.Html }}</div>
+      </section>
     {{ end }}
 
     <footer style="background-color: #ddd; border: 1px solid #bbb; padding: 8px 16px;">
