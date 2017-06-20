@@ -3,6 +3,11 @@
   "title": "Basic",
   
   "metadatum" : {
+    "google-analytics" : {
+      "title": "Google Analytics ID",
+      "desc": "Analyse visits with Google Analytics.",
+      "help": "Provide a Universal Analytics number, such as 'UA-12345678-1'"
+    }
   },
   "option": {
   },
